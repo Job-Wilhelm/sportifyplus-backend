@@ -42,4 +42,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+const { AppDataSource } = require('./config/data-source');
+
+AppDataSource.initialize()
+  .then(() => {
+    console.log("📦 Data Source has been initialized!");
+  })
+  .catch((err) => {
+    console.error("❌ Error during Data Source initialization", err);
+  });
+
+
 module.exports = app;
