@@ -1,0 +1,77 @@
+# Title
+
+這是 2025 年後端工程師專題班北九組的專題「Sportify+」運動教學影音平台的後端環境。
+
+## Install
+
+以下將會引導你如何安裝此專案到你的電腦上。
+Node.js 版本建議為 V22.12.0 以上。
+
+### 取得專案
+
+北九組開發者請先 fork 此專案，再到自己的 REPO 再往下執行。
+
+```bash
+git clone https://github.com/Mattie1391/sportify-backend.git
+```
+
+### 安裝套件
+
+請打開專案資料夾，並開啟 Terminal，逐項輸入以下指令 :
+
+npm init
+npm install
+
+### 環境變數設定
+
+請向北九組索取.env 檔案，並放入路徑sportify-backend下
+
+## 啟動專案
+
+### npm 啟動
+
+npm run start
+npm run dev
+
+### 關掉專案
+
+npm run stop
+
+### 移除docker容器(包括專案與資料庫)
+
+npm run clean
+
+## 資料夾說明
+
+- controllers - 控制器放置處
+- modules - 模組放置處
+- views - 畫面放置處
+- utils - 工具放置處
+- routes - 路由放置處
+- config - 設定放置處
+- models - 資料表實體放置處
+- bin - 放置 web 伺服器與監聽相關程式碼
+
+## 專案技術
+
+- Node.js v22.12.0
+- Vue v3
+- Vite
+- Vue Router
+- Axios
+- Bootstrap v5
+
+## 第三方服務
+
+- Mux Video
+- EC pay
+
+## 可以做
+
+controller 分流
+梳理 middleware
+建立 config
+建立 entities
+確定eslint版本
+更好的錯誤處理
+重新打包 git hub action

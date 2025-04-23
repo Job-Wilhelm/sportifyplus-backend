@@ -1,12 +1,17 @@
 {
-  "name": "newproject",
+  "name": "sportifyplus",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon"
+    "start": "docker compose --env-file .env up -d --build",
+    "restart": "docker compose --env-file .env up --force-recreate --build -d",
+    "stop": "docker compose --env-file .env stop",
+    "clean": "docker compose --env-file .env down -v",
+    "dev": "nodemon ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "config": "^3.3.12",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -14,6 +19,7 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "jsonwebtoken": "^9.0.2",
     "morgan": "~1.9.1",
     "pg": "^8.14.1",
     "pino-http": "^10.4.0",
@@ -22,5 +28,9 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
-  }
+  },
+  "main": "app.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
