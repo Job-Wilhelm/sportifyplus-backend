@@ -1,6 +1,6 @@
 # Title
 
-這是 2025 年後端工程師專題班北九組的專題「Sportify+」運動教學影音平台的後端環境。
+這是 2025 年後端工程師專題班北九組的專題「Sportify+」運動教學影音平台的後端環境，改自後端大師Mattie的版本。
 
 ## Install
 
@@ -11,9 +11,6 @@ Node.js 版本建議為 V22.12.0 以上。
 
 北九組開發者請先 fork 此專案，再到自己的 REPO 再往下執行。
 
-```bash
-git clone https://github.com/Mattie1391/sportify-backend.git
-```
 
 ### 安裝套件
 
@@ -29,15 +26,16 @@ npm install
 ## 啟動專案
 
 ### npm 啟動
+以下指令會從dockerhub下載postgres資料庫映像檔並開啟，然後自動啟動web伺服器。
 
 npm run start
-npm run dev
 
-### 關掉專案
+
+### 關掉專案與資料庫
 
 npm run stop
 
-### 移除docker容器(包括專案與資料庫)
+### 移除docker容器(包括專案、資料庫、volume)，請注意此指令會刪除所有資料庫資料。
 
 npm run clean
 
@@ -49,29 +47,25 @@ npm run clean
 - utils - 工具放置處
 - routes - 路由放置處
 - config - 設定放置處
-- models - 資料表實體放置處
+- entities - 資料表實體放置處
 - bin - 放置 web 伺服器與監聽相關程式碼
 
 ## 專案技術
 
 - Node.js v22.12.0
-- Vue v3
-- Vite
-- Vue Router
-- Axios
-- Bootstrap v5
 
 ## 第三方服務
 
 - Mux Video
 - EC pay
 
-## 可以做
+## 往後繼續加入
 
 controller 分流
 梳理 middleware
-建立 config
 建立 entities
 確定eslint版本
 更好的錯誤處理
 重新打包 git hub action
+導入nginx代理伺服器
+導入uuid(版本?)

@@ -21,12 +21,16 @@
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^9.0.2",
     "morgan": "~1.9.1",
-    "pg": "^8.14.1",
+    "pg": "^8.15.6",
+    "pino": "^9.6.0",
     "pino-http": "^10.4.0",
+    "pino-pretty": "^13.0.0",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.22"
   },
   "devDependencies": {
+    "@types/node": "^22.15.0",
+    "node-pg-migrate": "^7.9.1",
     "nodemon": "^3.1.9"
   },
   "main": "app.js",

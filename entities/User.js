@@ -1,4 +1,4 @@
-const { EntitySchema } = require('typeorm');
+const { EntitySchema } = require("typeorm");
 
 module.exports = new EntitySchema({
   name: "User",
@@ -11,6 +11,7 @@ module.exports = new EntitySchema({
     },
     name: {
       type: "varchar",
+      length: 20,
     },
   },
 });

@@ -1,56 +1,50 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-const cors = require('cors');
-const pinoHttp = require('pino-http');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const path = require("path");
+const pinoHttp = require("pino-http");
+const logger = require("./utils/logger")("App");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+//導入router
 
-var app = express();
+const usersRouter = require("./routes/users");
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-app.use(logger('dev'));
+const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
-app.use(pinoHttp());
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-const { AppDataSource } = require('./config/data-source');
-
-AppDataSource.initialize()
-  .then(() => {
-    console.log("📦 Data Source has been initialized!");
+app.use(
+  pinoHttp({
+    logger,
+    serializers: {
+      req(req) {
+        req.body = req.raw.body;
+        return req;
+      },
+    },
   })
-  .catch((err) => {
-    console.error("❌ Error during Data Source initialization", err);
-  });
+);
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
 
+app.use("/users", usersRouter);
+
+app.use((req, res, next) => {
+  logger.warn("404 找不到對應資源");
+  res.status(404).json({
+    status: false,
+    message: "找不到對應資源",
+  });
+  return;
+});
+
+app.use((err, req, res, next) => {
+  req.log.error(err);
+  const statusCode = err.status || 500;
+  res.status(statusCode).json({
+    status: statusCode === 500 ? "error" : false,
+    message: err.message || "伺服器錯誤，未能取得資料",
+  });
+});
 
 module.exports = app;
