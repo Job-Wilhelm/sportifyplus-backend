@@ -2,6 +2,7 @@ const { DataSource } = require("typeorm");
 const config = require("../config/index");
 
 const User = require("../entities/User");
+const Video = require("../entities/video");
 
 const AppDataSource = new DataSource({
   type: "postgres",
@@ -11,7 +12,7 @@ const AppDataSource = new DataSource({
   password: config.get("db.password"),
   database: config.get("db.database"),
   synchronize: config.get("db.synchronize"),
-  entities: [User], // ← 注意這裡要匯入正確 Entity
+  entities: [User, Video], // ← 注意這裡要匯入正確 Entity
 });
 
 module.exports = { AppDataSource };

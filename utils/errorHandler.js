@@ -3,3 +3,5 @@ const appError = (status, errMessage, next) => {
   error.status = status;
   return error;
 };
+
+module.exports = appError;

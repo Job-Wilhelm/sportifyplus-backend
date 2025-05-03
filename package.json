@@ -10,6 +10,8 @@
     "dev": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@mux/mux-node": "^11.0.2",
+    "@mux/upchunk": "^3.5.0",
     "bcrypt": "^5.1.1",
     "config": "^3.3.12",
     "cookie-parser": "~1.4.4",

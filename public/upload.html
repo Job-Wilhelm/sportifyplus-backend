@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mux批量上傳頁面</title>
+  </head>
+  <body>
+    <h1>Mux Video Upload</h1>
+    <!-- 檔案選擇器，可選多個，實作上一個選擇器應該只能選一個 -->
+    <input type="file" id="fileInput" multiple />
+    <button onclick="uploadFiles()">Upload</button>
+
+    <script src="https://unpkg.com/@mux/upchunk@3.0.1/dist/upchunk.min.js"></script>
+
+    <div id="status">尚未開始上傳</div>
+    <script>
+      async function uploadFiles() {
+        const files = document.getElementById("fileInput").files;
+        if (!files || files.length === 0)
+          return alert("Please select a video.");
+
+        document.getElementById("status").innerText = "Getting upload URL...";
+
+        // 1. 向後端取得 Mux upload_url(預設複數個檔案上傳)，這邊使用upchunk模組，以支援大規模、可間斷的上傳任務
+        for (const file of files) {
+          try {
+            const res = await fetch("/api/v1/courses/upload-mux/upload", {
+              method: "POST",
+            });
+
+            if (!res.ok) throw new Error("無法取得上傳連結");
+            const data = await res.json();
+
+            // 2. 使用upchunk建立上傳器
+            const upload = UpChunk.createUpload({
+              endpoint: data.uploadUrl, //從後端取得的upload url
+              file: file,
+              chunkSize: 6 * 1024 * 1024, //將影片分割上傳，這裡預設6mb
+            });
+
+            //可移除，上傳進度條
+            upload.on("progress", (progress) => {
+              console.log(`${file.name} 上傳進度: ${progress.detail}%`);
+            });
+
+            document.getElementById("status").innerText =
+              "Upload complete! Waiting for processing...";
+
+            upload.on("success", () => {
+              console.log(`✅ ${file.name} 上傳完成`);
+            });
+            upload.on("error", (err) => {
+              console.error(`❌ ${file.name} 上傳失敗`, err.detail);
+            });
+          } catch (error) {
+            console.error(`❌ ${file.name} 錯誤：`, error);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

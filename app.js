@@ -8,6 +8,7 @@ const logger = require("./utils/logger")("App");
 //導入router
 
 const usersRouter = require("./routes/users");
+const uploadRouter = require("./routes/upload");
 
 const app = express();
 app.use(express.json());
@@ -27,7 +28,12 @@ app.use(
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+//前端路由
+app.use(express.static("public"));
+
+//後端路由
 app.use("/users", usersRouter);
+app.use("/api/v1/courses/upload-mux", uploadRouter);
 
 app.use((req, res, next) => {
   logger.warn("404 找不到對應資源");
