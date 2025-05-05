@@ -7,7 +7,8 @@
     "restart": "docker compose --env-file .env up --force-recreate --build -d",
     "stop": "docker compose --env-file .env stop",
     "clean": "docker compose --env-file .env down -v",
-    "dev": "nodemon ./bin/www"
+    "dev": "nodemon ./bin/www",
+    "pg": "docker-compose -f docker-compose.pg.yml --env-file .env up -d"
   },
   "dependencies": {
     "@mux/mux-node": "^11.0.2",

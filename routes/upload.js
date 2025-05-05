@@ -82,9 +82,13 @@ router.post("/upload", async (req, res, next) => {
       cors_origin: corsOrigin || "*", //部署前請去掉"*"
       test: true, //部署前請去掉
     });
-    res.json({
-      uploadUrl: upload.url,
-      id: upload.id,
+    res.status(201).json({
+      status: true,
+      message: "新增上傳成功",
+      data: {
+        uploadUrl: upload.url,
+        id: upload.id,
+      },
     });
   } catch (error) {
     next(error);
