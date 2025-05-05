@@ -1,4 +1,3 @@
-const { timeStamp } = require("console");
 const { EntitySchema } = require("typeorm");
 
 module.exports = new EntitySchema({
